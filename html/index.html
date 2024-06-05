@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register With Captcha</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 15px;
+            color: #e2e2e2;
+            -webkit-text-stroke: 1px #fff;
+            text-shadow: 3px 3px 0px #000;
+            background-image: url('background.jpeg');
+            background-size: cover;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        form {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        input {
+            border: 1px solid #fff;
+            background-color: transparent;
+            color: #fff;
+            padding: 5px;
+            margin: 5px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        button {
+            color: #fff;
+            background-color: #0074cc;
+            border: 1px solid #fff;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        h1 {
+            color: #fff;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>Register with Captcha</h1>
+
+        <form>
+            <div id="captchaImage"> </div>
+            <label id="captchaPrompt">Enter the word shown above:</label>
+            <input type="text" id="captchaResponse" value="" size="40" /><br /><br />
+            <label id="emailPrompt">Enter your email to register:</label>
+            <input type="text" id="email" value="" size="40" /><br /><br />
+            <button type="button" onclick="validateForm();">Submit</button>
+            <button type="button" onclick="setupForm();">Reset</button>
+            <input type="hidden" id="captchaAnswer" value="" />
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        function setupForm() {
+            document.getElementById("captchaPrompt").innerHTML = 'Enter the word shown above: ';
+            document.getElementById("captchaPrompt").style.color = "white";
+            document.getElementById("captchaResponse").value = "";
+            document.getElementById("emailPrompt").innerHTML = "Enter your email to register:";
+            document.getElementById("emailPrompt").style.color = "white";
+            var captcha = ["captcha1.jpg", "captcha2.jpg", "captcha3.jpg"];
+            var captchaAnswer = ["weasel", "moose", "polecat"];
+            var j = Math.floor(Math.random() * captcha.length);
+            document.getElementById("captchaImage").innerHTML = "<img src='" + captcha[j] + "' width='305' height='100' />";
+            document.getElementById("captchaAnswer").value = captchaAnswer[j];
+        }
+
+        function validateForm() {
+            if (document.getElementById("captchaResponse").value !== document.getElementById("captchaAnswer").value) {
+                document.getElementById("captchaPrompt").style.color = "red";
+            } else {
+                var valid = false;
+                var email = document.getElementById("email").value;
+                if (email.indexOf("@") >= 1) {
+                    valid = true;
+                }
+                if (valid) {
+                    alert('Thank you for registering with address: \n' + email);
+                    document.getElementById("emailPrompt").style.color = "white";
+                } else {
+                    document.getElementById("emailPrompt").innerHTML = 'Enter a valid email to register:';
+                    document.getElementById("emailPrompt").style.color = "red";
+                }
+            }
+        }
+
+        setupForm();
+    </script>
+</body>
+</html>
